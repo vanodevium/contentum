@@ -1,0 +1,51 @@
+{
+  "name": "sssr",
+  "version": "0.0.1",
+  "description": "Automatic SEO optimization: get already rendered content of the page with puppeteer and cache",
+  "keywords": [
+    "ssr",
+    "server-side render",
+    "server render",
+    "seo",
+    "render",
+    "rendering",
+    "prerender",
+    "puppeteer",
+    "cache"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vanodevium/sssr.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Vano Devium",
+    "email": "vano@devium.me",
+    "url": "https://www.devium.me"
+  },
+  "main": "index.js",
+  "scripts": {
+    "fix": "prettier -w lib tests",
+    "local": "DEBUG=sssr* WORKERS=8 NO_CACHE=1 CHROME_BIN=/usr/bin/chromium-browser node init.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "debug": "4.3.4",
+    "dotenv": "16.0.3",
+    "generic-pool": "3.9.0",
+    "keyv": "4.5.2",
+    "keyv-file": "0.2.0",
+    "puppeteer": "19.7.5"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.5.0",
+    "@koa/router": "12.0.0",
+    "jest": "29.5.0",
+    "koa": "2.14.1",
+    "koa-compress": "5.1.0",
+    "prettier": "2.8.7"
+  },
+  "optionalDependencies": {
+    "fsevents": "2.3.2"
+  }
+}
