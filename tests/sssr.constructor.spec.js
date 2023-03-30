@@ -28,27 +28,27 @@ describe("SSSR.constructor", () => {
     expect(sssr.cache.store.opts.store).toBeInstanceOf(Map);
   });
 
-  test("should have 1 worker", async () => {
+  test("should have max 1 worker", async () => {
     const sssr = new SSSR(1);
-    expect(sssr.limiter.pool.min).toBe(1);
-    expect(sssr.limiter.pool.max).toBe(1);
+    expect(sssr.limiter.pool.minWorkers).toBe(0);
+    expect(sssr.limiter.pool.maxWorkers).toBe(1);
   });
 
-  test("should have min 1 worker anyway", async () => {
+  test("should have max 1 worker anyway", async () => {
     const sssr = new SSSR(0);
-    expect(sssr.limiter.pool.min).toBe(1);
-    expect(sssr.limiter.pool.max).toBe(1);
+    expect(sssr.limiter.pool.minWorkers).toBe(0);
+    expect(sssr.limiter.pool.maxWorkers).toBe(1);
   });
 
-  test("should have min 1 worker anyway", async () => {
+  test("should have max 1 worker anyway", async () => {
     const sssr = new SSSR(undefined);
-    expect(sssr.limiter.pool.min).toBe(1);
-    expect(sssr.limiter.pool.max).toBe(1);
+    expect(sssr.limiter.pool.minWorkers).toBe(0);
+    expect(sssr.limiter.pool.maxWorkers).toBe(1);
   });
 
-  test("should have 3 workers", async () => {
+  test("should have max 3 workers", async () => {
     const sssr = new SSSR(3);
-    expect(sssr.limiter.pool.min).toBe(1);
-    expect(sssr.limiter.pool.max).toBe(3);
+    expect(sssr.limiter.pool.minWorkers).toBe(0);
+    expect(sssr.limiter.pool.maxWorkers).toBe(3);
   });
 });
