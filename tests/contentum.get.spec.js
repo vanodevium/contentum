@@ -1,5 +1,5 @@
 const { describe, test, expect } = require("@jest/globals");
-const SSSR = require("../lib/sssr");
+const Contentum = require("../lib/contentum");
 const Content = require("./../lib/content");
 
 const GOOGLE = "https://google.com/";
@@ -7,15 +7,17 @@ const GOOGLE = "https://google.com/";
 const CACHED_CONTENT = "cached content";
 const ORIGINAL_CONTENT = "original content";
 
-describe("SSSR.get()", () => {
+describe("Contentum.get()", () => {
   test("it should skip the cache:get(url, {}, false)", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
 
-    await sssr.cache.set(GOOGLE, CACHED_CONTENT);
+    await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    sssr.limiter.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
+    contentum.limiter.process = jest.fn(() =>
+      Promise.resolve(ORIGINAL_CONTENT)
+    );
 
-    const result = await sssr.get(GOOGLE, null, false);
+    const result = await contentum.get(GOOGLE, null, false);
 
     expect(result).toBeInstanceOf(Content);
     expect(result.status).toBe(200);
@@ -24,13 +26,15 @@ describe("SSSR.get()", () => {
   });
 
   test("it should skip the cache:getWithCache(url, {})", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
 
-    await sssr.cache.set(GOOGLE, CACHED_CONTENT);
+    await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    sssr.limiter.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
+    contentum.limiter.process = jest.fn(() =>
+      Promise.resolve(ORIGINAL_CONTENT)
+    );
 
-    const result = await sssr.getWithCache(GOOGLE, {});
+    const result = await contentum.getWithCache(GOOGLE, {});
 
     expect(result).toBeInstanceOf(Content);
     expect(result.status).toBe(200);
@@ -39,13 +43,15 @@ describe("SSSR.get()", () => {
   });
 
   test("it should skip the cache:getWithoutCache(url, {})", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
 
-    await sssr.cache.set(GOOGLE, CACHED_CONTENT);
+    await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    sssr.limiter.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
+    contentum.limiter.process = jest.fn(() =>
+      Promise.resolve(ORIGINAL_CONTENT)
+    );
 
-    const result = await sssr.getWithoutCache(GOOGLE, {});
+    const result = await contentum.getWithoutCache(GOOGLE, {});
 
     expect(result).toBeInstanceOf(Content);
     expect(result.status).toBe(200);
@@ -54,32 +60,34 @@ describe("SSSR.get()", () => {
   });
 
   test("it should put to the cache:get(url)", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
 
-    sssr.limiter.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
+    contentum.limiter.process = jest.fn(() =>
+      Promise.resolve(ORIGINAL_CONTENT)
+    );
 
-    const result = await sssr.get(GOOGLE);
+    const result = await contentum.get(GOOGLE);
 
     expect(result).toBeInstanceOf(Content);
     expect(result.status).toBe(200);
     expect(result.content).toBe(ORIGINAL_CONTENT);
 
-    expect(await sssr.cache.get(GOOGLE)).toBe(ORIGINAL_CONTENT);
+    expect(await contentum.cache.get(GOOGLE)).toBe(ORIGINAL_CONTENT);
   });
 
   test("it should pass options:get(url, {...})", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
     const headers = { "user-agent": "curl/client" };
 
-    sssr.limiter.process = jest
-      .spyOn(sssr.limiter, "process")
+    contentum.limiter.process = jest
+      .spyOn(contentum.limiter, "process")
       .mockImplementation(() => Promise.resolve());
 
-    const spy = jest.spyOn(sssr, "makePageOptions");
+    const spy = jest.spyOn(contentum, "makePageOptions");
 
-    await sssr.get(GOOGLE, { headers });
+    await contentum.get(GOOGLE, { headers });
 
-    const options = Object.assign(SSSR.DefaultPageOptions, {
+    const options = Object.assign(Contentum.DefaultPageOptions, {
       headers,
     });
 

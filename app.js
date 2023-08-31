@@ -1,9 +1,9 @@
 const Koa = require("koa");
 const Router = require("@koa/router");
 const compress = require("koa-compress");
-const SSSR = require("./index");
+const Contentum = require("./index");
 
-const NO_CACHE_HEADER = "x-sssr-no-cache";
+const NO_CACHE_HEADER = "x-contentum-no-cache";
 const REQUEST_PATTERN = "/:url(.*)";
 
 /**
@@ -14,20 +14,20 @@ function init(workers = 1) {
   const app = new Koa();
   const router = new Router();
 
-  const sssr = new SSSR(workers);
+  const contentum = new Contentum(workers);
 
   router.get(REQUEST_PATTERN, async (ctx) => {
     const options = {
       headers: ctx.headers,
     };
     const useCache = !Number(ctx.get(NO_CACHE_HEADER));
-    const { status, content } = await sssr.get(parseUrlString(ctx), options, useCache);
+    const { status, content } = await contentum.get(parseUrlString(ctx), options, useCache);
     ctx.status = status;
     ctx.body = content;
   });
 
   router.del(REQUEST_PATTERN, async (ctx) => {
-    const { status } = await sssr.forget(parseUrlString(ctx));
+    const { status } = await contentum.forget(parseUrlString(ctx));
     ctx.status = status;
   });
 

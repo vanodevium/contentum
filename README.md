@@ -1,4 +1,4 @@
-# SSSR [![NPM version](https://img.shields.io/npm/v/sssr.svg)](https://www.npmjs.com/package/sssr) ![NPM](https://img.shields.io/npm/l/sssr.svg) ![Travis](https://img.shields.io/travis/com/webdevium/sssr.svg)
+# Contentum [![NPM version](https://img.shields.io/npm/v/contentum.svg)](https://www.npmjs.com/package/contentum) ![NPM](https://img.shields.io/npm/l/contentum.svg)
 
 > Inspired by [prerender](https://github.com/prerender/prerender)
 
@@ -7,11 +7,12 @@
 Don't forget SEO when developing web applications.
 
 At the moment, there are many libraries that allow you to achieve server rendering.
-But they all require changes in the source code of your application, which is not always easy to do for large or old projects.
+But they all require changes in the source code of your application, which is not always easy to do for large or old
+projects.
 
-SSSR allows server side rendering without a single change to the source code of your JS application.
+Contentum allows server side rendering without a single change to the source code of your application.
 
-All you need to configure SSSR is either a basic knowledge of configuring Nginx or some middleware on the server.
+All you need to configure Contentum is either a basic knowledge of configuring Nginx or some middleware on the server.
 
 ## Features
 
@@ -22,7 +23,9 @@ All you need to configure SSSR is either a basic knowledge of configuring Nginx 
 
 ## Installation
 
-`npm install --save sssr`
+```sh
+npm i contentum
+```
 
 ## API
 
@@ -64,25 +67,25 @@ forget(url);
 
 ```js
 
-const sssr = new SSSR(
+const contentum = new Contentum(
     1,       /* number of workers, required */
     'memory' /* type of cache */
 );
 
 // how to get content of url (basic method)
-let {status, content} = await sssr.get('https://google.com');
+let {status, content} = await contentum.get('https://google.com');
 
 // how to get content of url with cache
-let {status, content} = await sssr.getWithCache('https://google.com');
+let {status, content} = await contentum.getWithCache('https://google.com');
 
 // how to get content of url without cache
-let {status, content} = await sssr.getWithoutCache('https://google.com');
+let {status, content} = await contentum.getWithoutCache('https://google.com');
 
 // how to clear the cache for specific url
-await sssr.forget('https://google.com');
+await contentum.forget('https://google.com');
 
 // how to clear the entire cache
-await sssr.forget('*');
+await contentum.forget('*');
 
 ```
 
@@ -90,20 +93,20 @@ await sssr.forget('*');
 
 The available instance methods are listed below. The specified options will be merged with the default options.
 
-##### sssr#get(url, [, options[, useCache]])
+##### contentum#get(url, [, options[, useCache]])
 
-##### sssr#getWithCache(url[, options])
+##### contentum#getWithCache(url[, options])
 
-##### sssr#getWithoutCache(url[, options])
+##### contentum#getWithoutCache(url[, options])
 
-##### sssr#forget(url)
+##### contentum#forget(url)
 
 ## Page content options
 
 These are the available config options for page rendering.
 
 ```js
-{
+const options = {
   // `userAgent` is custom user-agent to be sent
   userAgent: null,
 
@@ -127,10 +130,16 @@ These are the available config options for page rendering.
   // puppeteer specific option
   // `waitForSelector` is any selector on page for waiting. Default is "body"
   // https://github.com/puppeteer/puppeteer/blob/v9.1.1/docs/api.md#pagewaitforselectorselector-options
-  waitForSelector: "body",
+  waitForSelector: "body"
 }
 ```
 
-## License
+### License
 
-The `sssr` is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**contentum** is open-sourced software licensed under the [MIT license](./LICENSE.md).
+
+[Vano Devium](https://github.com/vanodevium/)
+
+---
+
+Made with ❤️ in Ukraine

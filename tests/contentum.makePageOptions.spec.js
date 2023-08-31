@@ -1,7 +1,7 @@
 const { describe, test, expect } = require("@jest/globals");
-const SSSR = require("../lib/sssr");
+const Contentum = require("../lib/contentum");
 const Worker = require("../lib/worker");
-const DefaultOptions = SSSR.DefaultPageOptions;
+const DefaultOptions = Contentum.DefaultPageOptions;
 
 const GOOGLE = "https://google.com/";
 
@@ -27,12 +27,12 @@ const mockPageObject = () => {
   };
 };
 
-describe("SSSR.makePageOptions()", () => {
+describe("Contentum.makePageOptions()", () => {
   test("it should make configuration with default options", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
     const worker = new Worker();
 
-    const options = sssr.makePageOptions(GOOGLE, DefaultOptions);
+    const options = contentum.makePageOptions(GOOGLE, DefaultOptions);
 
     const { page, userAgentSpy, extraHeadersSpy, gotoSpy, selectorSpy } =
       mockPageObject();
@@ -41,7 +41,7 @@ describe("SSSR.makePageOptions()", () => {
 
     expect(userAgentSpy).not.toBeCalled();
     expect(extraHeadersSpy).toBeCalledWith({});
-    expect(gotoSpy).toBeCalledWith(sssr.normalizeUrl(GOOGLE, true), {
+    expect(gotoSpy).toBeCalledWith(contentum.normalizeUrl(GOOGLE, true), {
       timeout: DefaultOptions.timeout,
       waitUntil: DefaultOptions.waitUntil,
     });
@@ -51,10 +51,10 @@ describe("SSSR.makePageOptions()", () => {
   });
 
   test("it should make configuration with user-agent header", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
     const worker = new Worker();
 
-    const options = sssr.makePageOptions(
+    const options = contentum.makePageOptions(
       GOOGLE,
       Object.assign(DefaultOptions, {
         headers: {
@@ -72,10 +72,10 @@ describe("SSSR.makePageOptions()", () => {
   });
 
   test("it should make configuration with userAgent option", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
     const worker = new Worker();
 
-    const options = sssr.makePageOptions(
+    const options = contentum.makePageOptions(
       GOOGLE,
       Object.assign(DefaultOptions, {
         userAgent: "user/agent/v1.0.0",
@@ -91,10 +91,10 @@ describe("SSSR.makePageOptions()", () => {
   });
 
   test("it should make configuration with custom headers", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
     const worker = new Worker();
 
-    const options = sssr.makePageOptions(
+    const options = contentum.makePageOptions(
       GOOGLE,
       Object.assign(DefaultOptions, {
         headers: {
@@ -113,10 +113,10 @@ describe("SSSR.makePageOptions()", () => {
   });
 
   test("it should make configuration without custom host headers", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
     const worker = new Worker();
 
-    const options = sssr.makePageOptions(
+    const options = contentum.makePageOptions(
       GOOGLE,
       Object.assign(DefaultOptions, {
         headers: {
@@ -136,10 +136,10 @@ describe("SSSR.makePageOptions()", () => {
   });
 
   test("it should make configuration with waitForSelector option", async () => {
-    const sssr = new SSSR(1);
+    const contentum = new Contentum(1);
     const worker = new Worker();
 
-    const options = sssr.makePageOptions(
+    const options = contentum.makePageOptions(
       GOOGLE,
       Object.assign(DefaultOptions, {
         waitForSelector: "#element",

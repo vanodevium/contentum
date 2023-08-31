@@ -1,1 +1,1 @@
-module.exports = require('./lib/sssr');
+module.exports = require('./lib/contentum');

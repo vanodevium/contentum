@@ -1,5 +1,5 @@
 {
-  "name": "sssr",
+  "name": "contentum",
   "version": "0.0.1",
   "description": "Automatic SEO optimization: get already rendered content of the page with puppeteer and cache",
   "keywords": [
@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vanodevium/sssr.git"
+    "url": "https://github.com/vanodevium/contentum.git"
   },
   "license": "MIT",
   "author": {
@@ -26,7 +26,7 @@
   "main": "index.js",
   "scripts": {
     "fix": "prettier -w lib tests",
-    "local": "DEBUG=sssr* WORKERS=8 NO_CACHE=1 CHROME_BIN=/usr/bin/chromium-browser node init.js",
+    "local": "DEBUG=contentum* WORKERS=8 NO_CACHE=1 CHROME_BIN=/usr/bin/chromium-browser node init.js",
     "test": "jest"
   },
   "dependencies": {

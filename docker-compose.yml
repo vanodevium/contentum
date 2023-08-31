@@ -2,18 +2,18 @@ version: "3"
 
 services:
 
-  sssr:
+  contentum:
     build:
       context: .
     restart: always
-    container_name: sssr
+    container_name: contentum
     environment:
       - "WORKERS=1"
-      - "DEBUG=sssr*"
+      - "DEBUG=contentum*"
     ports:
       - "3000:3000"
     networks:
-      - sssr-network
+      - contentum-network
 
 networks:
-  sssr-network:
+  contentum-network:
