@@ -1,11 +1,11 @@
-version: "3"
+version: "3.8"
 
 services:
 
   contentum:
     build:
       context: .
-    restart: always
+    restart: unless-stopped
     container_name: contentum
     environment:
       - "WORKERS=1"
@@ -14,6 +14,10 @@ services:
       - "3000:3000"
     networks:
       - contentum-network
+    volumes:
+      - ./:/app
+      - /app/node_modules
 
 networks:
   contentum-network:
+    name: "contentum"
