@@ -71,6 +71,7 @@ const contentum = new Contentum(
     1,       /* number of workers, required */
     'memory' /* type of cache */
 );
+await contentum.initPool();
 
 // how to get content of url (basic method)
 let {status, content} = await contentum.get('https://google.com');
