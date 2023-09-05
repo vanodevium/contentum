@@ -30,25 +30,29 @@ describe("Contentum.constructor", () => {
 
   test("should have max 1 worker", async () => {
     const contentum = new Contentum(1);
-    expect(contentum.limiter.pool.minWorkers).toBe(0);
-    expect(contentum.limiter.pool.maxWorkers).toBe(1);
+    await contentum.initPool();
+    expect(contentum.pool._pool.minWorkers).toBe(0);
+    expect(contentum.pool._pool.maxWorkers).toBe(1);
   });
 
   test("should have max 1 worker anyway", async () => {
     const contentum = new Contentum(0);
-    expect(contentum.limiter.pool.minWorkers).toBe(0);
-    expect(contentum.limiter.pool.maxWorkers).toBe(1);
+    await contentum.initPool();
+    expect(contentum.pool._pool.minWorkers).toBe(0);
+    expect(contentum.pool._pool.maxWorkers).toBe(1);
   });
 
   test("should have max 1 worker anyway", async () => {
     const contentum = new Contentum(undefined);
-    expect(contentum.limiter.pool.minWorkers).toBe(0);
-    expect(contentum.limiter.pool.maxWorkers).toBe(1);
+    await contentum.initPool();
+    expect(contentum.pool._pool.minWorkers).toBe(0);
+    expect(contentum.pool._pool.maxWorkers).toBe(1);
   });
 
   test("should have max 3 workers", async () => {
     const contentum = new Contentum(3);
-    expect(contentum.limiter.pool.minWorkers).toBe(0);
-    expect(contentum.limiter.pool.maxWorkers).toBe(3);
+    await contentum.initPool();
+    expect(contentum.pool._pool.minWorkers).toBe(0);
+    expect(contentum.pool._pool.maxWorkers).toBe(3);
   });
 });

@@ -10,12 +10,11 @@ const ORIGINAL_CONTENT = "original content";
 describe("Contentum.get()", () => {
   test("it should skip the cache:get(url, {}, false)", async () => {
     const contentum = new Contentum(1);
+    await contentum.initPool();
 
     await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    contentum.limiter.process = jest.fn(() =>
-      Promise.resolve(ORIGINAL_CONTENT)
-    );
+    contentum.pool.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
 
     const result = await contentum.get(GOOGLE, null, false);
 
@@ -27,12 +26,11 @@ describe("Contentum.get()", () => {
 
   test("it should skip the cache:getWithCache(url, {})", async () => {
     const contentum = new Contentum(1);
+    await contentum.initPool();
 
     await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    contentum.limiter.process = jest.fn(() =>
-      Promise.resolve(ORIGINAL_CONTENT)
-    );
+    contentum.pool.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
 
     const result = await contentum.getWithCache(GOOGLE, {});
 
@@ -44,12 +42,11 @@ describe("Contentum.get()", () => {
 
   test("it should skip the cache:getWithoutCache(url, {})", async () => {
     const contentum = new Contentum(1);
+    await contentum.initPool();
 
     await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    contentum.limiter.process = jest.fn(() =>
-      Promise.resolve(ORIGINAL_CONTENT)
-    );
+    contentum.pool.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
 
     const result = await contentum.getWithoutCache(GOOGLE, {});
 
@@ -61,10 +58,9 @@ describe("Contentum.get()", () => {
 
   test("it should put to the cache:get(url)", async () => {
     const contentum = new Contentum(1);
+    await contentum.initPool();
 
-    contentum.limiter.process = jest.fn(() =>
-      Promise.resolve(ORIGINAL_CONTENT)
-    );
+    contentum.pool.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
 
     const result = await contentum.get(GOOGLE);
 
@@ -77,10 +73,11 @@ describe("Contentum.get()", () => {
 
   test("it should pass options:get(url, {...})", async () => {
     const contentum = new Contentum(1);
+    await contentum.initPool();
     const headers = { "user-agent": "curl/client" };
 
-    contentum.limiter.process = jest
-      .spyOn(contentum.limiter, "process")
+    contentum.pool.process = jest
+      .spyOn(contentum.pool, "process")
       .mockImplementation(() => Promise.resolve());
 
     const spy = jest.spyOn(contentum, "makePageOptions");

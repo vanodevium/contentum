@@ -21,3 +21,4 @@ services:
 networks:
   contentum-network:
     name: "contentum"
+    driver: "bridge"

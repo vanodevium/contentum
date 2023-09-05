@@ -15,7 +15,7 @@ describe("Contentum.normalizeUrl()", () => {
     const contentum = new Contentum(1);
 
     expect(contentum.normalizeUrl(GOOGLE, true)).toBe(
-      "https://google.com/?_contentum_=true"
+      "https://google.com/?_contentum_=true",
     );
   });
 

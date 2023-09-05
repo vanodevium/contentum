@@ -60,7 +60,7 @@ describe("Contentum.makePageOptions()", () => {
         headers: {
           "user-agent": "user/agent/v1.0.0",
         },
-      })
+      }),
     );
 
     const { page, userAgentSpy, extraHeadersSpy } = mockPageObject();
@@ -79,7 +79,7 @@ describe("Contentum.makePageOptions()", () => {
       GOOGLE,
       Object.assign(DefaultOptions, {
         userAgent: "user/agent/v1.0.0",
-      })
+      }),
     );
 
     const { page, userAgentSpy, extraHeadersSpy } = mockPageObject();
@@ -100,7 +100,7 @@ describe("Contentum.makePageOptions()", () => {
         headers: {
           "x-custom-header": "custom value",
         },
-      })
+      }),
     );
 
     const { page, extraHeadersSpy } = mockPageObject();
@@ -123,7 +123,7 @@ describe("Contentum.makePageOptions()", () => {
           "x-custom-header": "custom value",
           host: GOOGLE,
         },
-      })
+      }),
     );
 
     const { page, extraHeadersSpy } = mockPageObject();
@@ -143,7 +143,7 @@ describe("Contentum.makePageOptions()", () => {
       GOOGLE,
       Object.assign(DefaultOptions, {
         waitForSelector: "#element",
-      })
+      }),
     );
 
     const { page, selectorSpy } = mockPageObject();

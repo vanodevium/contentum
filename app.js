@@ -15,6 +15,7 @@ function init(workers = 1) {
   const router = new Router();
 
   const contentum = new Contentum(workers);
+  contentum.initPool();
 
   router.get(REQUEST_PATTERN, async (ctx) => {
     const options = {
