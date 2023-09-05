@@ -8,13 +8,14 @@ const REQUEST_PATTERN = "/:url(.*)";
 
 /**
  * @param {Number} workers
+ * @param {Boolean|String} cache
  * @returns {Application}
  */
-function init(workers = 1) {
+function init(workers = 1, cache = null) {
   const app = new Koa();
   const router = new Router();
 
-  const contentum = new Contentum(workers);
+  const contentum = new Contentum(workers, cache);
   contentum.initPool();
 
   router.get(REQUEST_PATTERN, async (ctx) => {
