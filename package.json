@@ -36,11 +36,11 @@
   ],
   "scripts": {
     "fix": "prettier -w bin lib tests",
-    "local": "DEBUG=contentum* WORKERS=4 NO_CACHE=1 CHROME_BIN=/usr/bin/chromium node init.js",
+    "local": "npx contentum -w 4 -d",
     "test": "jest"
   },
   "dependencies": {
-    "commander": "^11.0.0",
+    "commander": "11.0.0",
     "debug": "4.3.4",
     "dotenv": "16.3.1",
     "keyv": "4.5.3",
