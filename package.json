@@ -30,7 +30,7 @@
   "files": [
     "index.js",
     "init.js",
-    "app.js",
+    "server.js",
     "bin",
     "lib"
   ],

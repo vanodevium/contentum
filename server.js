@@ -3,7 +3,7 @@ const Router = require("@koa/router");
 const compress = require("koa-compress");
 const Contentum = require("./index");
 
-const NO_CACHE_HEADER = "x-contentum-no-cache";
+const NO_CACHE_HEADER = "x-contentum-no";
 const REQUEST_PATTERN = "/:url(.*)";
 
 /**
@@ -22,7 +22,7 @@ function init(workers = 1, cache = null) {
     const options = {
       headers: ctx.headers,
     };
-    const useCache = !Number(ctx.get(NO_CACHE_HEADER));
+    const useCache = !Object.hasOwn(ctx.request.headers, NO_CACHE_HEADER);
     const { status, content } = await contentum.get(parseUrlString(ctx), options, useCache);
     ctx.status = status;
     ctx.body = content;

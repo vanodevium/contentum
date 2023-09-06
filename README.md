@@ -29,6 +29,8 @@ npm i contentum
 
 ## API
 
+> **each url must start with http or https**
+
 > each public API method returns a Promise
 
 ```js

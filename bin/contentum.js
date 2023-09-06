@@ -46,7 +46,7 @@ if (options.bin) {
 }
 
 const debug = require("debug")("contentum");
-const app = require("./../app");
+const app = require("../server");
 const contentum = app(program.opts().workers, options.cache);
 
 contentum.listen(options.port, "0.0.0.0", () => {
