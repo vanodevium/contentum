@@ -2,6 +2,8 @@
 
 const dotenv = require("dotenv");
 
+const DEBUG = "contentum*";
+
 /**
  * @param {dotenv.DotenvPopulateInput} obj
  */
@@ -15,7 +17,6 @@ const packageJson = require("./../package.json");
 program
   .name(packageJson.name)
   .description(packageJson.description)
-
   .option("-p --port <port>", "port", "3000")
   .option("-w --workers <workers>", "workers amount", "1")
   .option("-d --debug", "enable debug", false)
@@ -31,18 +32,26 @@ const options = program.opts();
 
 if (options.env) {
   dotenv.config();
-}
 
-if (options.debug) {
-  setEnv({ DEBUG: "contentum*" });
-}
+  if (process.env.NO_CACHE) {
+    options.cache = false;
+  }
 
-if (options.file) {
-  setEnv({ CACHE_FILE: options.file });
-}
+  if (process.env.DEBUG) {
+    setEnv({ DEBUG });
+  }
+} else {
+  if (options.debug) {
+    setEnv({ DEBUG });
+  }
 
-if (options.bin) {
-  setEnv({ CHROME_BIN: options.bin });
+  if (options.file) {
+    setEnv({ CACHE_FILE: options.file });
+  }
+
+  if (options.bin) {
+    setEnv({ CHROME_BIN: options.bin });
+  }
 }
 
 const debug = require("debug")("contentum");

@@ -36,7 +36,7 @@
   ],
   "scripts": {
     "fix": "prettier -w bin lib tests",
-    "local": "npx contentum -w 4 -d",
+    "local": "npx contentum --env",
     "test": "jest"
   },
   "dependencies": {

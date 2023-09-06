@@ -26,6 +26,7 @@ function init(workers = 1, cache = null) {
     const { status, content } = await contentum.get(parseUrlString(ctx), options, useCache);
     ctx.status = status;
     ctx.body = content;
+    ctx.set('x-contentum', 'yes');
   });
 
   router.del(REQUEST_PATTERN, async (ctx) => {
