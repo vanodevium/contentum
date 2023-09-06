@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const dotenv = require("dotenv");
-dotenv.config();
 
 /**
  * @param {dotenv.DotenvPopulateInput} obj
@@ -16,17 +15,23 @@ const packageJson = require("./../package.json");
 program
   .name(packageJson.name)
   .description(packageJson.description)
+
   .option("-p --port <port>", "port", "3000")
   .option("-w --workers <workers>", "workers amount", "1")
   .option("-d --debug", "enable debug", false)
   .option("-n --no-cache", "disable cache", true)
   .option("-f --file <file>", "cache filepath")
-  .option("--bin <bin>", "chromium bin location")
+  .option("--bin <bin>", "chromium bin location", "/usr/bin/chromium")
+  .option("--env", "load environment variables", false)
   .version(packageJson.version);
 
 program.parse(process.argv);
 
 const options = program.opts();
+
+if (options.env) {
+  dotenv.config();
+}
 
 if (options.debug) {
   setEnv({ DEBUG: "contentum*" });
