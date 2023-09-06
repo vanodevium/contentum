@@ -14,7 +14,9 @@ describe("Contentum.get()", () => {
 
     await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    contentum.pool.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
+    contentum.pool.process = jest.fn(() =>
+      Promise.resolve({ content: ORIGINAL_CONTENT }),
+    );
 
     const result = await contentum.get(GOOGLE, null, false);
 
@@ -30,7 +32,9 @@ describe("Contentum.get()", () => {
 
     await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    contentum.pool.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
+    contentum.pool.process = jest.fn(() =>
+      Promise.resolve({ content: ORIGINAL_CONTENT }),
+    );
 
     const result = await contentum.getWithCache(GOOGLE, {});
 
@@ -46,7 +50,9 @@ describe("Contentum.get()", () => {
 
     await contentum.cache.set(GOOGLE, CACHED_CONTENT);
 
-    contentum.pool.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
+    contentum.pool.process = jest.fn(() =>
+      Promise.resolve({ content: ORIGINAL_CONTENT }),
+    );
 
     const result = await contentum.getWithoutCache(GOOGLE, {});
 
@@ -60,7 +66,9 @@ describe("Contentum.get()", () => {
     const contentum = new Contentum(1);
     await contentum.initPool();
 
-    contentum.pool.process = jest.fn(() => Promise.resolve(ORIGINAL_CONTENT));
+    contentum.pool.process = jest.fn(() =>
+      Promise.resolve({ content: ORIGINAL_CONTENT }),
+    );
 
     const result = await contentum.get(GOOGLE);
 
