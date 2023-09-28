@@ -34,14 +34,13 @@ npm i contentum
 > each public API method returns a Promise
 
 ```js
-
 /**
  * @param {string} url
  * @param {Object} options
  * @param {boolean} useCache
  * @returns {Promise<Content>}
  */
-get(url = "", options = {}, useCache = true);
+get((url = ""), (options = {}), (useCache = true));
 
 /**
  * @param {string} url
@@ -62,34 +61,31 @@ getWithoutCache(url, options);
  * @returns {Promise<Content>}
  */
 forget(url);
-
 ```
 
 ## Example
 
 ```js
-
 const contentum = new Contentum(
-    1,       /* number of workers, required */
-    'memory' /* type of cache */
+  1 /* number of workers, required */,
+  "memory" /* type of cache */,
 );
 await contentum.initPool();
 
 // how to get content of url (basic method)
-let {status, content} = await contentum.get('https://google.com');
+let { status, content } = await contentum.get("https://google.com");
 
 // how to get content of url with cache
-let {status, content} = await contentum.getWithCache('https://google.com');
+let { status, content } = await contentum.getWithCache("https://google.com");
 
 // how to get content of url without cache
-let {status, content} = await contentum.getWithoutCache('https://google.com');
+let { status, content } = await contentum.getWithoutCache("https://google.com");
 
 // how to clear the cache for specific url
-await contentum.forget('https://google.com');
+await contentum.forget("https://google.com");
 
 // how to clear the entire cache
-await contentum.forget('*');
-
+await contentum.forget("*");
 ```
 
 ### Instance methods
@@ -111,30 +107,31 @@ These are the available config options for page rendering.
 ```js
 const options = {
   // `userAgent` is custom user-agent to be sent
-  userAgent: null,
+  userAgent: null, // default
 
   // `headers` are custom headers to be sent
   // please use lowercase keys
-  headers: {'x-custom-header': 'custom header value'},
-    
-  // `removeScripts` indicates whether or not SSSR will remove any scripts from page content after rendering
-  removeScripts: true, // default
+  // default: empty object
+  headers: { "x-custom-header": "custom header value" },
+
+  // `removeScripts` indicates whether or not contentum will remove any scripts from page content after rendering
+  removeScripts: false, // default
 
   // puppeteer specific option
   // `waitUntil` is the request method to be used when making the request
-  // https://github.com/puppeteer/puppeteer/blob/v9.1.1/docs/api.md#pagegotourl-options
-  waitUntil: 'load', // default
+  // https://pptr.dev/api/puppeteer.page.goto#parameters
+  waitUntil: "load", // default
 
   // puppeteer specific option
   // `timeout` specifies the number of milliseconds before the request times out.
-  // https://github.com/puppeteer/puppeteer/blob/v9.1.1/docs/api.md#pagesetdefaultnavigationtimeouttimeout
+  // https://pptr.dev/api/puppeteer.page.setdefaultnavigationtimeout/
   timeout: 1000, // default is `30000` ms (30 seconds)
-        
+
   // puppeteer specific option
-  // `waitForSelector` is any selector on page for waiting. Default is "body"
-  // https://github.com/puppeteer/puppeteer/blob/v9.1.1/docs/api.md#pagewaitforselectorselector-options
-  waitForSelector: "body"
-}
+  // `waitForSelector` is any selector on page for waiting.
+  // https://pptr.dev/api/puppeteer.page.waitforselector/#parameters
+  waitForSelector: "body", // default
+};
 ```
 
 ### License

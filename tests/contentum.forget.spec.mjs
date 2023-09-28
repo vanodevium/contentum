@@ -1,6 +1,6 @@
-const { describe, test, expect } = require("@jest/globals");
-const Contentum = require("../lib/contentum");
-const Content = require("./../lib/content");
+import { describe, test } from "mocha";
+import { expect } from "chai";
+import Contentum from "../lib/contentum.mjs";
 
 const GOOGLE = "https://google.com/";
 const FACEBOOK = "https://facebook.com/";
@@ -15,10 +15,10 @@ describe("Contentum.forget()", () => {
 
     const result = await contentum.forget(GOOGLE);
 
-    expect(result).toBeInstanceOf(Content);
-    expect(result.status).toBe(202);
-    expect(result.content).toBe("");
-    expect(await contentum.cache.get(GOOGLE)).toBeUndefined();
+    expect(result).to.be.instanceof(Response);
+    expect(result.status).to.eq(202);
+    expect(await result.text()).to.eq("");
+    expect(await contentum.cache.get(GOOGLE)).to.be.undefined;
   });
 
   test("it should forget all the cache:forget(*))", async () => {
@@ -29,11 +29,11 @@ describe("Contentum.forget()", () => {
 
     const result = await contentum.forget("*");
 
-    expect(result).toBeInstanceOf(Content);
-    expect(result.status).toBe(202);
-    expect(result.content).toBe("");
-    expect(await contentum.cache.get(GOOGLE)).toBeUndefined();
-    expect(await contentum.cache.get(FACEBOOK)).toBeUndefined();
+    expect(result).to.be.instanceof(Response);
+    expect(result.status).to.eq(202);
+    expect(await result.text()).to.eq("");
+    expect(await contentum.cache.get(GOOGLE)).to.be.undefined;
+    expect(await contentum.cache.get(FACEBOOK)).to.be.undefined;
   });
 
   test("it should work with empty cache:forget(url))", async () => {
@@ -41,8 +41,8 @@ describe("Contentum.forget()", () => {
 
     const result = await contentum.forget(GOOGLE);
 
-    expect(result).toBeInstanceOf(Content);
-    expect(result.status).toBe(202);
-    expect(result.content).toBe("");
+    expect(result).to.be.instanceof(Response);
+    expect(result.status).to.eq(202);
+    expect(await result.text()).to.eq("");
   });
 });

@@ -1,6 +1,26 @@
 version: "3.8"
 
 services:
+  traefik:
+    image: "traefik:2.10.4"
+    container_name: "traefik"
+    command:
+      - "--log.level=DEBUG"
+      - "--accesslog"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entryPoints.web.forwardedHeaders.insecure"
+      - "--entrypoints.https.address=:443"
+      - "--entryPoints.https.forwardedHeaders.insecure"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - contentum-network
 
   contentum:
     build:
@@ -10,6 +30,7 @@ services:
     environment:
       - "WORKERS=1"
       - "DEBUG=contentum*"
+      - "UPSTREAM=http://example2/"
     ports:
       - "3000:3000"
     networks:
@@ -17,6 +38,37 @@ services:
     volumes:
       - ./:/app
       - /app/node_modules
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.contentum.rule=Host(`example2.localhost`) && !Query(`_contentum_=1`)"
+
+  example1:
+    image: nginx:alpine
+    container_name: example1
+    ports:
+      - "81:80"
+    volumes:
+      - ./example/:/app
+      - ./example/nginx1.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - contentum-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.example1.rule=Host(`example1.localhost`)"
+
+  example2:
+    image: nginx:alpine
+    container_name: example2
+    ports:
+      - "82:80"
+    volumes:
+      - ./example/:/app
+      - ./example/nginx2.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - contentum-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.example2.rule=Host(`example2.localhost`) && Query(`_contentum_=1`)"
 
 networks:
   contentum-network:

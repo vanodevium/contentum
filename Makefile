@@ -4,8 +4,10 @@ THIS_FILE := $(lastword $(MAKEFILE_LIST))
 
 help:
 	make -pRrq  -f $(THIS_FILE) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
-build:
+build-no-cache:
 	docker-compose build --no-cache
+build:
+	docker-compose build
 up:
 	docker-compose up -d --build
 restart:
